@@ -9,13 +9,13 @@ class Tag(models.Model):
 
 class Prompt(models.Model):
     text = models.CharField(max_length=500)
-    tag = models.ForeignKey(Tag,related_name="prompts")
+    tag = models.ForeignKey(Tag,related_name="prompts",on_delete=models.CASCADE)
     def __str__(self):
         return self.text + " [[" + self.tag.name + "]"
     
 class Choice(models.Model):
     text = models.CharField(max_length=500)
-    tag = models.ForeignKey(Tag,related_name="choices")
-    promptNext = models.ForeignKey(Prompt,related_name="befores")
+    tag = models.ForeignKey(Tag,related_name="choices",on_delete=models.CASCADE)
+    promptNext = models.ForeignKey(Prompt,related_name="befores",on_delete=models.CASCADE)
     def __str__(self):
         return self.text + " [[" + self.tag.name + "] -> " + self.promptNext.text
