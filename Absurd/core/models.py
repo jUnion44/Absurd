@@ -8,7 +8,7 @@ class Tag(models.Model):
         return self.name
 
 class Prompt(models.Model):
-    text = models.CharField(max_length=500)
+    text = models.TextField()
     tag = models.ForeignKey(Tag,related_name="prompts",on_delete=models.CASCADE)
     def __str__(self):
         return self.text + " [[" + self.tag.name + "]"
