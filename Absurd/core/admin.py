@@ -4,6 +4,7 @@ from .models import *
 class ChoiceInline(admin.StackedInline):
     model = Choice
     extra=0
+    fk_name  = "promptCurrent"
 
 class PromptAdmin(admin.ModelAdmin):
     inlines = [

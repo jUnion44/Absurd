@@ -16,6 +16,7 @@ class Prompt(models.Model):
 class Choice(models.Model):
     text = models.CharField(max_length=500)
     tag = models.ForeignKey(Tag,related_name="choices",on_delete=models.CASCADE)
-    promptNext = models.ForeignKey(Prompt,related_name="befores",on_delete=models.CASCADE)
+    promptCurrent = models.ForeignKey(Prompt,related_name="befores",on_delete=models.CASCADE)
+    promptNext = models.ForeignKey(Prompt,related_name="destination",on_delete=models.CASCADE)
     def __str__(self):
         return self.text + " [[" + self.tag.name + "] -> " + self.promptNext.text
