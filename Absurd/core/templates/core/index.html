@@ -1,0 +1,35 @@
+Test chat bot thing this is cool yeet<br>
+
+<div id="chatcontainer">
+<div id="chat">
+
+
+
+</div>
+</div>
+
+<script>
+function loadPrompt(promptid) {
+	  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+		jsonstuff = JSON.parse(this.responseText)
+		chatbox = document.getElementById("chat")
+		htmlgen = "<p>"+jsonstuff["prompt"]+"</p>"
+		console.log(jsonstuff)
+		ch= jsonstuff["choices"]
+		
+		for (var i=0;i<ch.length;i++){
+			htmlgen = htmlgen + "<p style='color:blue' onclick='loadPrompt("+ch[i][1]+")'>"+ch[i][0]+"</p>"
+		}
+		chatbox.insertAdjacentHTML("beforeend",htmlgen)
+    }
+  };
+  xhttp.open("GET", "/load/"+promptid+"/", true);
+  xhttp.send();
+
+}
+
+startid = {{starterid}}
+loadPrompt(startid)
+</script>
