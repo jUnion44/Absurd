@@ -18,6 +18,6 @@ class Choice(models.Model):
     tag = models.ForeignKey(Tag,related_name="choices",on_delete=models.CASCADE)
     random = models.BooleanField(default=True)
     promptCurrent = models.ForeignKey(Prompt,related_name="befores",on_delete=models.CASCADE)
-    promptNext = models.ForeignKey(Prompt,related_name="destination",on_delete=models.SET_NULL,null=True)
+    promptNext = models.ForeignKey(Prompt,related_name="destination",on_delete=models.SET_NULL,null=True,blank=True)
     def __str__(self):
         return self.text + " [[" + self.tag.name + "] -> " + self.promptNext.text
