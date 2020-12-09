@@ -17,7 +17,7 @@ def loadPrompt(request,promptid):
     responsedict = {"prompt":p.text,"choices":[]}
     prompts = list(Prompt.objects.order_by('id').values())
     for c in p.befores.all():
-        if c.random:
+        if not c.promptNext:
             responsedict["choices"].append([c.text,random.choice(prompts)["id"]])
         else:
             responsedict["choices"].append([c.text,c.promptNext.id])
