@@ -25,3 +25,6 @@ def loadPrompt(request,promptid):
         
     response = JsonResponse(responsedict)
     return response
+
+def void(request):
+    return render(request,"core/void.html",{"starterid":STARTER_ID})
