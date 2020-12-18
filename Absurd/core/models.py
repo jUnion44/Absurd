@@ -15,7 +15,7 @@ class Prompt(models.Model):
     
 class Choice(models.Model):
     text = models.CharField(max_length=500)
-    tag = models.ForeignKey(Tag,related_name="choices",on_delete=models.CASCADE)
+    tag = models.ForeignKey(Tag,related_name="choices",on_delete=models.CASCADE,default=1)
     promptCurrent = models.ForeignKey(Prompt,related_name="befores",on_delete=models.CASCADE)
     #promptNext = models.ForeignKey(Prompt,related_name="destination",on_delete=models.SET_NULL,null=True,blank=True)
     response = models.TextField()
