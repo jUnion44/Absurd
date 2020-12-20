@@ -2,18 +2,19 @@
 <!DOCTYPE html>
 <html lang="en-US">
 <head>
+<title>Gobot</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="UTF-8">
   
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-  <link rel="stylesheet" type = "text/css" href="colinweb.css">
+  <link rel="stylesheet" type = "text/css" href="/static/core/colinweb.css">
   <link href="https://fonts.googleapis.com/css?family=Vesper+Libre|Staatliches|Righteous|Cinzel|Tauri|Major+Mono+Display|Roboto+Condensed|Audiowide|Pattaya|Quicksand|Cabin" rel="stylesheet">
-  <script src="colinjavascript.js"></script>
+  <script src="/static/core/colinjavascript.js"></script>
 </head>
 
 <body>
 
-<header style="background-image:url(space.png);">GOBOT<br><span class="subheading">An Absurd Bot You Won't Need to Wait For</span></header>
+<header style="background-image:url('/static/core/space.png');">GOBOT<br><span class="subheading">An Absurd Bot You Won't Need to Wait For</span></header>
 
 <nav id="myTopnav">
 <a id = "logo" title="The Best News Source">GOBOT™</a>
@@ -49,8 +50,9 @@
 </nav>
 <br>
 
-<div class="chat">
+<div class="chat" id="chatcointainer">
 <h1><i class="fas fa-comments"></i>&nbsp;Chat</h1>
+<!--
 <div class="bot chatbubble">
   Question thing is here
 </div>
@@ -63,6 +65,7 @@
 <div class="chatbubble">
 	Response 3
 </div>
+-->
 </div>
 
 <div class="contactcontainer" id="contact">
@@ -75,6 +78,128 @@
   <br>All Wrongs Reserved<br>
   <br><font style = "size:30px;font-family:'Quicksand';">Made with <i class="fab fa-squarespace"></i>&nbsp;DODECAHEDRONSPACE
   <br><font size=1px>(self-coded)</font></font>
+<script>
+var filled = true;
+var toFill = []
+var responseCache = []
+var promptsLeft=8
+function fill(node,text){
+	if (text==""){
+	filled=true
+	return;
+	} else{
+		filled=false;
+		node.innerHTML = node.innerHTML+text.substring(0,1)
+		window.setTimeout(function(){fill(node,text.substring(1))},10)
+	}
+}
 
+function fillHandler(){
+	if (toFill.length>0&&filled){
+		nodetext = toFill.shift()
+		
+		document.getElementById("chatcointainer").appendChild(nodetext[0])
+		filled=false;
+		
+		window.setTimeout(function(){fill(nodetext[0],nodetext[1])},100)
+		
+}}
+
+window.setInterval(fillHandler,10)
+
+function fillappend(node,text){
+	toFill.push([node,text])
+}
+
+function loadText(idnum){
+	var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+		json = JSON.parse(this.responseText)
+		console.log(json)
+		prompt = json.prompt
+		pLines = prompt.split("\n")
+		for (var i = 0;i < pLines.length;i++){
+			line = pLines[i]
+			var node = document.createElement("div")
+			node.classList.add("chatbubble")
+			if (line.substring(0, 3)==">> "){
+			
+				line=line.substring(3)
+			} else {
+			node.classList.add("bot")
+			
+			}
+			//document.getElementById("chatcointainer").appendChild(node)
+			fillappend(node,line)
+			
+		}
+		
+		choices = json.choices
+		for (var i = 0;i < choices.length;i++){
+			line = choices[i]
+			console.log(line)
+			var node = document.createElement("div")
+			node.classList.add("chatbubble")
+			node.name=Math.random().toString().substr(2, 8)+Math.random().toString().substr(2, 8)+Math.random().toString().substr(2, 8)
+			//node.classList.add("bot")
+			
+			
+			eval("node.onclick = function(){process("+line[2]+","+line[1]+")}")
+			//console.log(eval(e))
+			fillappend(node,line[0])
+			
+		}
+		
+		
+  }};
+  
+  console.log("called")
+  xhttp.open("GET", "/load/" + idnum+"/", true);
+  xhttp.send();
+}
+
+function process(msg,next){
+bubbles = document.getElementsByClassName("chatbubble")
+for (var i=0;i<bubbles.length;i++){
+	bubbles[i].onclick=""
+}
+promptsLeft = promptsLeft - 1
+if (promptsLeft==0){
+msg=0
+promptsLeft=8}
+var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+	pLines = JSON.parse(this.responseText)["l"]
+if (!pLines[0]==""){
+	
+	
+		for (var i = 0;i < pLines.length;i++){
+			line = pLines[i]
+			if (line.trim()==""){
+				continue
+			}
+			var node = document.createElement("div")
+			node.classList.add("chatbubble")
+			if (line.substring(0, 3)==">> "){
+			
+				line=line.substring(3)
+			} else {
+			node.classList.add("bot")
+			
+			}
+			//document.getElementById("chatcointainer").appendChild(node)
+			fillappend(node,line)
+			
+		}
+	}loadText(next)
+}}
+xhttp.open("GET", "/choice/" + msg+"/", true);
+  xhttp.send();
+  }
+loadText("3")
+
+</script>
 </body>
 </html>

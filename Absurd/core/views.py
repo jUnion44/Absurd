@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from .models import *
 import random
 
@@ -17,14 +17,21 @@ def loadPrompt(request,promptid):
     responsedict = {"prompt":p.text,"choices":[]}
     prompts = list(Prompt.objects.order_by('id').values())
     for c in p.befores.all():
-        if not c.promptNext:
-            responsedict["choices"].append([c.text,random.choice(prompts)["id"]])
-        else:
-            responsedict["choices"].append([c.text,c.promptNext.id])
-        
+        responsedict["choices"].append([c.text,random.choice(prompts)["id"],c.id])
+    responsedict["choices"].append(["Nothing to be done",3,0])
+    ch = responsedict["choices"][:]
+    random.shuffle(ch)
+    responsedict["choices"]=ch
         
     response = JsonResponse(responsedict)
     return response
 
+def loadResponse(request,cid):
+    if cid==0:
+        return JsonResponse({"l":[""]})
+    else:
+        c = get_object_or_404(Choice,pk=cid)
+        lines = c.response.splitlines()
+        return JsonResponse({"l":lines})
 def void(request):
     return render(request,"core/void.html",{"starterid":STARTER_ID})
