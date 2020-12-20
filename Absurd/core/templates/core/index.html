@@ -1,35 +1,80 @@
-Test chat bot thing this is cool yeet<br>
 
-<div id="chatcontainer">
-<div id="chat">
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  <link rel="stylesheet" type = "text/css" href="colinweb.css">
+  <link href="https://fonts.googleapis.com/css?family=Vesper+Libre|Staatliches|Righteous|Cinzel|Tauri|Major+Mono+Display|Roboto+Condensed|Audiowide|Pattaya|Quicksand|Cabin" rel="stylesheet">
+  <script src="colinjavascript.js"></script>
+</head>
 
+<body>
 
+<header style="background-image:url(space.png);">GOBOT<br><span class="subheading">An Absurd Bot You Won't Need to Wait For</span></header>
 
+<nav id="myTopnav">
+<a id = "logo" title="The Best News Source">GOBOT™</a>
+<a href=""><i class="fa fa-home"></i>Home</a>
+<a style="cursor:not-allowed" href=""><i class="fas fa-brain"></i>Truth</a>
+<a style="cursor:not-allowed" href=""><i class="fas fa-bible"></i>Meaning</a>
+<div  class = "dropdown">
+	<button class="dropbtn"><i class="fas fa-utensils"></i>Food&nbsp;<i class="fa fa-caret-down"></i></button>
+    <div class="dropdown-content">
+	  <a href="#"><i class="fas fa-utensils"></i>Turnip</a>
+	  <a href="#"><i class="fas fa-utensils"></i>Turnip</a>
+	  <a href="#"><i class="fas fa-utensils"></i>Turnip</a>
+	  <a href="#"><i class="fas fa-utensils"></i>Turnip</a>
+	  <a href="#"><i class="fas fa-utensils"></i>Turnip</a>
+	  <a href="#"><i class="fas fa-utensils"></i>Turnip</a>
+      <a href="#"><i class="fas fa-carrot"></i>Carrot</a>
+    </div>
+</div>
+<a title="please I'm broke" style="cursor:not-allowed"><i class="fas fa-shoe-prints"></i>Boots that fit</a>
+<a class="rightTab" href="#contact" style="margin-right: 10px;"><i class="fa fa-address-card"></i>Contact</a>
+<div class="dropdown rightTab">
+  <button class="dropbtn" href=""><i class="far fa-question-circle"></i>Q&A&nbsp;<i class="fas fa-caret-down"></i></button>
+	<div class="dropdown-content">
+	  <a href="" target="_blank">There are no answers</a>
+	</div>
+</div>
+
+<a href="javascript:void(0);" class="icon" onclick="myFunction()">
+	<div class = "line1"></div>
+	<div class = "line2"></div>
+	<div class = "line3"></div>
+</a>
+</nav>
+<br>
+
+<div class="chat">
+<h1><i class="fas fa-comments"></i>&nbsp;Chat</h1>
+<div class="bot chatbubble">
+  Question thing is here
+</div>
+<div class="chatbubble">
+  Response 1
+</div>
+<div class="chatbubble">
+	Response 2
+</div>
+<div class="chatbubble">
+	Response 3
 </div>
 </div>
 
-<script>
-function loadPrompt(promptid) {
-	  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-		jsonstuff = JSON.parse(this.responseText)
-		chatbox = document.getElementById("chat")
-		htmlgen = "<p>"+jsonstuff["prompt"]+"</p>"
-		console.log(jsonstuff)
-		ch= jsonstuff["choices"]
-		
-		for (var i=0;i<ch.length;i++){
-			htmlgen = htmlgen + "<p style='color:blue' onclick='loadPrompt("+ch[i][1]+")'>"+ch[i][0]+"</p>"
-		}
-		chatbox.insertAdjacentHTML("beforeend",htmlgen)
-    }
-  };
-  xhttp.open("GET", "/load/"+promptid+"/", true);
-  xhttp.send();
+<div class="contactcontainer" id="contact">
+<h1><i class="fas fa-mobile-alt"></i>&nbsp;Contact</h1>
+<br><br>
+</div>
+<!--<h1><i class="far fa-question-circle"></i>&nbsp;Q&A</h1>-->
+<footer>
+  &copy; 0 BC-∞ Someone?
+  <br>All Wrongs Reserved<br>
+  <br><font style = "size:30px;font-family:'Quicksand';">Made with <i class="fab fa-squarespace"></i>&nbsp;DODECAHEDRONSPACE
+  <br><font size=1px>(self-coded)</font></font>
 
-}
-
-startid = {{starterid}}
-loadPrompt(startid)
-</script>
+</body>
+</html>
