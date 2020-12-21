@@ -147,6 +147,14 @@ nav a:hover, nav a:hover .hiddentext, .dropdown:hover .dropbtn {
 @media screen and (max-width: 1240px){
 	nav i:not([class*="caret-down"]){display:none;}
 	
+	.chatbubble {
+		margin-left: 600px;
+	}
+
+	.bot{
+		margin-right: 600px;
+	}
+
 	nav .dropdown-content i:not([class*="caret-down"]){
 		display: inline;
 	}
@@ -157,6 +165,14 @@ nav a:hover, nav a:hover .hiddentext, .dropdown:hover .dropbtn {
 }
 
 @media screen and (max-width: 980px) {
+
+  .chatbubble {
+	margin-left: 300px;
+  }
+
+  .bot{
+	margin-right: 300px;
+  }
   nav a:not([id*="logo"]), .dropdown .dropbtn {
     display: none;
   }
