@@ -83,16 +83,34 @@ var filled = true;
 var toFill = []
 var responseCache = []
 var promptsLeft=8
+
+function slowload(node,iterations){
+	if (iterations<=0){
+		filled=true
+		return
+	} else{
+		node.innerHTML = node.innerHTML+"."
+		window.setTimeout(function(){slowload(node,iterations-1)},3000)
+	}
+}
+
 function fill(node,text){
 	if (text==""){
-	filled=true
-	return;
+		//slowload(node,Math.floor(Math.random()*30)-26)
+		if (Math.random()>0.99){
+		node.innerHTML = node.innerHTML+"<br><video autoplay width='400' height='225'><source src='https://ptgough.sfo2.digitaloceanspaces.com/sitvid.mp4' type='video/mp4'></video>"
+		window.setTimeout(function(){slowload(node,Math.floor(Math.random()*30)-26)},147000)}
+		else {
+		slowload(node,Math.floor(Math.random()*30)-26)
+		}
+		return;
 	} else{
 		filled=false;
 		node.innerHTML = node.innerHTML+text.substring(0,1)
 		window.setTimeout(function(){fill(node,text.substring(1))},10)
 	}
 }
+
 
 function fillHandler(){
 	if (toFill.length>0&&filled){
@@ -130,6 +148,7 @@ function loadText(idnum){
 			node.classList.add("bot")
 			
 			}
+			
 			//document.getElementById("chatcointainer").appendChild(node)
 			fillappend(node,line)
 			
@@ -147,6 +166,7 @@ function loadText(idnum){
 			
 			eval("node.onclick = function(){process("+line[2]+","+line[1]+")}")
 			//console.log(eval(e))
+			line[0] = (i+1)+") "+line[0]
 			fillappend(node,line[0])
 			
 		}
